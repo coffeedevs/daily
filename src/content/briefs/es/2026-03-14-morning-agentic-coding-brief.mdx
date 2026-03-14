@@ -1,0 +1,24 @@
+---
+title: Brief matutino de coding agéntico
+date: 2026-03-14
+extract: Claude Code sumó entrada estructurada a mitad de tarea y controles para monorepos, mientras Gemini CLI profundizó flujos A2A y activación de skills.
+tags:
+  - Anthropic
+  - OpenAI
+  - Google
+  - Coding agéntico
+---
+
+Claude Code publicó el cambio más útil para el flujo diario: los agentes ahora pueden pausar y pedir input MCP estructurado en vez de forzar todo por prompt libre. El patrón más claro es una convergencia hacia loops agénticos más controlables, mejor ergonomía en monorepos y auth/tooling más seguro.
+
+- **Claude Code suma MCP elicitation y control para monorepos**: `v2.1.76` permite que servidores MCP pidan input estructurado a mitad de tarea, agrega `worktree.sparsePaths` y expone `/effort`. Conviene mover herramientas internas de prompts largos a formularios guiados y ajustar sparse checkouts para agentes en repos grandes.
+- **Gemini CLI profundiza la interoperabilidad entre agentes**: el nightly más reciente agrega OAuth2 Authorization Code para agentes A2A, activación de skills por slash commands, uso de tokens por modelo en `stream-json` y un scheduler de herramientas orientado a eventos. Si corrés flujos multiagente o sensibles a costo, actualizá tus harnesses y empezá a registrar consumo por modelo.
+- **OpenAI Node agrega custom voices**: `openai-node v6.29.0` expone voces personalizadas en el cliente API. Equipos que construyen copilotos con narración, revisiones habladas o agentes con voz pueden llevar identidad de voz al producto sin sumar una capa TTS aparte.
+- **AI SDK endurece OAuth en flujos MCP**: `@ai-sdk/mcp@1.0.28` valida el `state` de OAuth durante la autenticación MCP, y el resto del patch train siguió avanzando con updates del gateway. Si proxyás herramientas MCP con auth web, revalidá tus callbacks hoy y eliminá cualquier chequeo laxo de `state` que haya quedado en desarrollo.
+
+## Fuentes
+
+- [Releases de Anthropic Claude Code](https://github.com/anthropics/claude-code/releases)
+- [Releases de Google Gemini CLI](https://github.com/google-gemini/gemini-cli/releases)
+- [Releases del SDK OpenAI Node](https://github.com/openai/openai-node/releases)
+- [Releases de Vercel AI SDK](https://github.com/vercel/ai/releases)

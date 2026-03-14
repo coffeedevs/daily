@@ -1,18 +1,23 @@
 ---
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
 ---
 
 <footer class="border-t border-warm-border mt-auto">
   <div class="max-w-2xl mx-auto px-6 py-8 text-center text-sm text-espresso-muted">
     <div class="flex items-center justify-center gap-4">
       <a
-        href="/rss.xml"
+        href={`/${lang}/rss.xml`}
         class="hover:text-caramel-dark transition-colors"
         title="RSS Feed"
       >
         RSS
       </a>
       <span>·</span>
-      <span>By <a href="https://github.com/coffeedevs" class="hover:text-caramel-dark transition-colors">CoffeeDevs</a></span>
+      <span>By <a href="https://coffeedevs.com" class="hover:text-caramel-dark transition-colors">CoffeeDevs</a></span>
     </div>
   </div>
 </footer>

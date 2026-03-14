@@ -1,28 +1,38 @@
 ---
+import LangSwitch from './LangSwitch.astro';
+import { t } from '../i18n/ui';
+
 interface Props {
+  lang: string;
   compact?: boolean;
 }
 
-const { compact = false } = Astro.props;
+const { lang, compact = false } = Astro.props;
 ---
 
 <header class="w-full border-b border-warm-border">
   <div class="max-w-2xl mx-auto px-6 py-8">
     {compact ? (
-      <a href="/" class="group inline-flex items-center gap-3 no-underline">
-        <span class="text-2xl">☕</span>
-        <span class="font-serif text-xl font-semibold text-espresso group-hover:text-caramel-dark transition-colors">
-          The Morning Espresso
-        </span>
-      </a>
+      <div class="flex items-center justify-between">
+        <a href={`/${lang}/`} class="group inline-flex items-center gap-3 no-underline">
+          <span class="text-2xl">☕</span>
+          <span class="font-serif text-xl font-semibold text-espresso group-hover:text-caramel-dark transition-colors">
+            The Morning Espresso
+          </span>
+        </a>
+        <LangSwitch lang={lang} />
+      </div>
     ) : (
-      <div class="text-center">
+      <div class="text-center relative">
+        <div class="absolute right-0 top-0">
+          <LangSwitch lang={lang} />
+        </div>
         <div class="text-4xl mb-4">☕</div>
         <h1 class="font-serif text-4xl md:text-5xl font-bold text-espresso mb-3 tracking-tight">
           The Morning Espresso
         </h1>
         <p class="text-espresso-light text-lg">
-          Your shot-sized news for agentic coding
+          {t(lang, 'site.tagline')}
         </p>
       </div>
     )}

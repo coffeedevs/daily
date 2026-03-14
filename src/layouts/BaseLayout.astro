@@ -2,11 +2,13 @@
 import '../styles/global.css';
 
 interface Props {
+  lang?: string;
   title?: string;
   description?: string;
 }
 
 const {
+  lang = 'en',
   title = 'The Morning Espresso',
   description = 'Your shot-sized news for agentic coding',
 } = Astro.props;
@@ -17,7 +19,7 @@ const fullTitle = title === 'The Morning Espresso'
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -35,7 +37,7 @@ const fullTitle = title === 'The Morning Espresso'
     <meta name="twitter:description" content={description} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="alternate" type="application/rss+xml" title="The Morning Espresso" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="The Morning Espresso" href={`/${lang}/rss.xml`} />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

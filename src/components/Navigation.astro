@@ -1,18 +1,21 @@
 ---
+import { t } from '../i18n/ui';
+
 interface Props {
+  lang: string;
   prev?: { slug: string; title: string } | null;
   next?: { slug: string; title: string } | null;
 }
 
-const { prev = null, next = null } = Astro.props;
+const { lang, prev = null, next = null } = Astro.props;
 ---
 
 {(prev || next) && (
   <nav class="flex justify-between items-start gap-6 pt-8 border-t border-warm-border">
     <div class="flex-1 min-w-0">
       {prev && (
-        <a href={`/briefs/${prev.slug}`} class="group block no-underline">
-          <span class="text-xs text-espresso-muted uppercase tracking-wide">← Previous</span>
+        <a href={`/${lang}/briefs/${prev.slug}`} class="group block no-underline">
+          <span class="text-xs text-espresso-muted uppercase tracking-wide">{t(lang, 'nav.prev')}</span>
           <span class="block font-serif text-sm font-medium text-espresso group-hover:text-caramel-dark transition-colors truncate mt-0.5">
             {prev.title}
           </span>
@@ -21,8 +24,8 @@ const { prev = null, next = null } = Astro.props;
     </div>
     <div class="flex-1 min-w-0 text-right">
       {next && (
-        <a href={`/briefs/${next.slug}`} class="group block no-underline">
-          <span class="text-xs text-espresso-muted uppercase tracking-wide">Next →</span>
+        <a href={`/${lang}/briefs/${next.slug}`} class="group block no-underline">
+          <span class="text-xs text-espresso-muted uppercase tracking-wide">{t(lang, 'nav.next')}</span>
           <span class="block font-serif text-sm font-medium text-espresso group-hover:text-caramel-dark transition-colors truncate mt-0.5">
             {next.title}
           </span>

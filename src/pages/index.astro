@@ -1,40 +1,21 @@
 ---
-import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import BriefCard from '../components/BriefCard.astro';
-import Newsletter from '../components/Newsletter.astro';
-
-const allBriefs = await getCollection('briefs');
-const briefs = allBriefs
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 7);
 ---
 
-<BaseLayout>
-  <Header />
-
-  <main class="flex-1 max-w-2xl mx-auto w-full px-6 py-10">
-    <Newsletter />
-
-    <section class="mt-10">
-      <h2 class="font-serif text-sm font-semibold text-espresso-muted uppercase tracking-widest mb-2">
-        Latest Briefs
-      </h2>
-      <div class="divide-y divide-warm-border">
-        {briefs.map((brief) => (
-          <BriefCard
-            slug={brief.id}
-            title={brief.data.title}
-            date={brief.data.date}
-            extract={brief.data.extract}
-            tags={brief.data.tags}
-          />
-        ))}
-      </div>
-    </section>
-  </main>
-
-  <Footer />
-</BaseLayout>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>The Morning Espresso</title>
+  </head>
+  <body>
+    <script is:inline>
+      const lang = navigator.language.startsWith('es') ? 'es' : 'en';
+      window.location.replace('/' + lang + '/');
+    </script>
+    <noscript>
+      <p>
+        <a href="/en/">English</a> |
+        <a href="/es/">Español</a>
+      </p>
+    </noscript>
+  </body>
+</html>

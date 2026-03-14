@@ -1,0 +1,94 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import Newsletter from '../../../components/Newsletter.astro';
+import Navigation from '../../../components/Navigation.astro';
+import { t, getLangFromId, getSlugFromId } from '../../../i18n/ui';
+
+export async function getStaticPaths() {
+  const allBriefs = await getCollection('briefs');
+  const paths = [];
+
+  for (const langCode of ['en', 'es']) {
+    const langBriefs = allBriefs
+      .filter((b) => getLangFromId(b.id) === langCode)
+      .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+    for (let i = 0; i < langBriefs.length; i++) {
+      paths.push({
+        params: { lang: langCode, slug: getSlugFromId(langBriefs[i].id) },
+        props: {
+          brief: langBriefs[i],
+          prev: i < langBriefs.length - 1
+            ? { slug: getSlugFromId(langBriefs[i + 1].id), title: langBriefs[i + 1].data.title }
+            : null,
+          next: i > 0
+            ? { slug: getSlugFromId(langBriefs[i - 1].id), title: langBriefs[i - 1].data.title }
+            : null,
+        },
+      });
+    }
+  }
+
+  return paths;
+}
+
+const { lang } = Astro.params;
+const { brief, prev, next } = Astro.props;
+const { Content } = await render(brief);
+
+const dateLocale = lang === 'es' ? 'es-AR' : 'en-US';
+const formattedDate = new Intl.DateTimeFormat(dateLocale, {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+}).format(brief.data.date);
+---
+
+<BaseLayout lang={lang} title={brief.data.title} description={brief.data.extract}>
+  <Header lang={lang} compact />
+
+  <main class="flex-1 max-w-2xl mx-auto w-full px-6 py-10">
+    <article>
+      <header class="mb-8">
+        <a
+          href={`/${lang}/`}
+          class="text-sm text-espresso-muted hover:text-caramel-dark transition-colors no-underline"
+        >
+          {t(lang, 'nav.back')}
+        </a>
+        <time class="block text-sm text-espresso-muted font-mono tracking-wide uppercase mt-6">
+          {formattedDate}
+        </time>
+        <h1 class="font-serif text-3xl md:text-4xl font-bold text-espresso mt-2 tracking-tight leading-tight">
+          {brief.data.title}
+        </h1>
+        {brief.data.tags && brief.data.tags.length > 0 && (
+          <div class="flex flex-wrap gap-2 mt-4">
+            {brief.data.tags.map((tag: string) => (
+              <span class="text-xs font-mono px-2 py-0.5 rounded-full bg-warm-border text-espresso-light">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </header>
+
+      <div class="prose">
+        <Content />
+      </div>
+    </article>
+
+    <Navigation lang={lang} prev={prev} next={next} />
+
+    <div class="mt-10">
+      <Newsletter lang={lang} />
+    </div>
+  </main>
+
+  <Footer lang={lang} />
+</BaseLayout>

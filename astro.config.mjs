@@ -6,7 +6,7 @@ import vercel from '@astrojs/vercel';
 export default defineConfig({
   site: 'https://daily.coffeedevs.com',
   integrations: [mdx()],
-  vite: {
+vite: {
     plugins: [tailwindcss()],
   },
   adapter: vercel(),

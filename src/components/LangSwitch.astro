@@ -1,0 +1,26 @@
+---
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const currentPath = Astro.url.pathname;
+const otherLang = lang === 'es' ? 'en' : 'es';
+const otherPath = currentPath.replace(`/${lang}`, `/${otherLang}`);
+---
+
+<nav class="flex items-center gap-1 text-sm font-mono">
+  {lang === 'en' ? (
+    <>
+      <span class="font-semibold text-espresso">EN</span>
+      <span class="text-espresso-muted">/</span>
+      <a href={otherPath} class="text-espresso-muted hover:text-caramel-dark transition-colors no-underline">ES</a>
+    </>
+  ) : (
+    <>
+      <a href={otherPath} class="text-espresso-muted hover:text-caramel-dark transition-colors no-underline">EN</a>
+      <span class="text-espresso-muted">/</span>
+      <span class="font-semibold text-espresso">ES</span>
+    </>
+  )}
+</nav>

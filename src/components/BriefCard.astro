@@ -1,5 +1,8 @@
 ---
+import { t } from '../i18n/ui';
+
 interface Props {
+  lang: string;
   slug: string;
   title: string;
   date: Date;
@@ -7,17 +10,19 @@ interface Props {
   tags?: string[];
 }
 
-const { slug, title, date, extract, tags = [] } = Astro.props;
+const { lang, slug, title, date, extract, tags = [] } = Astro.props;
 
-const formattedDate = date.toLocaleDateString('en-US', {
+const dateLocale = lang === 'es' ? 'es-AR' : 'en-US';
+const formattedDate = new Intl.DateTimeFormat(dateLocale, {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
-});
+  timeZone: 'UTC',
+}).format(date);
 ---
 
 <article class="group py-6">
-  <a href={`/briefs/${slug}`} class="block no-underline">
+  <a href={`/${lang}/briefs/${slug}`} class="block no-underline">
     <time class="text-sm text-espresso-muted font-mono tracking-wide uppercase">
       {formattedDate}
     </time>
@@ -30,14 +35,14 @@ const formattedDate = date.toLocaleDateString('en-US', {
     {tags.length > 0 && (
       <div class="flex flex-wrap gap-2 mb-3">
         {tags.map((tag) => (
-          <span class="text-xs font-mono px-2 py-0.5 rounded-full bg-cream-dark text-espresso-muted">
+          <span class="text-xs font-mono px-2 py-0.5 rounded-full bg-warm-border text-espresso-light">
             {tag}
           </span>
         ))}
       </div>
     )}
     <span class="text-sm text-caramel-dark font-medium group-hover:text-caramel transition-colors">
-      Read more →
+      {t(lang, 'nav.readMore')}
     </span>
   </a>
 </article>

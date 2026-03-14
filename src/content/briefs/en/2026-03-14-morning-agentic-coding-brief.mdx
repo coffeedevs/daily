@@ -1,7 +1,7 @@
 ---
 title: Morning Agentic Coding Brief
 date: 2026-03-14
-extract: Claude Code added structured mid-task input and monorepo controls, while Gemini CLI pushed deeper A2A and skill-driven workflows.
+extract: Claude Code added structured mid-task input and monorepo controls, while Gemini CLI pushed deeper agent-to-agent and skill-driven workflows.
 tags:
   - Anthropic
   - OpenAI
@@ -9,12 +9,12 @@ tags:
   - Agentic Coding
 ---
 
-Claude Code shipped the most immediately useful workflow change: agents can now pause for structured MCP input instead of forcing everything through prompt text. The broader pattern is convergence around more controllable agent loops, better monorepo ergonomics, and safer auth/tool plumbing.
+Claude Code shipped the clearest workflow upgrade: agents can now pause for structured Model Context Protocol (MCP) input instead of forcing everything through free-form prompts. The broader shift is toward tighter agent control, better monorepo ergonomics, and safer auth around tool use.
 
-- **Claude Code adds MCP elicitation + monorepo controls**: `v2.1.76` lets MCP servers request structured input mid-task, adds `worktree.sparsePaths`, and exposes `/effort`. Treat this as a prompt-to-form shift for internal tools, and tighten your monorepo agent setup around sparse checkouts and explicit effort levels.
-- **Gemini CLI deepens agent interoperability**: the latest nightly adds OAuth2 Authorization Code support for A2A agents, slash-command skill activation, per-model token usage in `stream-json`, and an event-driven tool scheduler. If you run multi-agent or cost-sensitive flows, upgrade your CLI harnesses and start logging per-model usage instead of aggregate spend.
-- **OpenAI Node adds custom voices**: `openai-node v6.29.0` exposes custom voices in the API client. Teams building coding copilots with narration, spoken reviews, or voice-first agents can move voice identity into product code instead of bolting on a separate TTS layer.
-- **AI SDK hardens MCP OAuth flows**: `@ai-sdk/mcp@1.0.28` validates OAuth `state` during MCP auth, and the main AI SDK patch train rolled forward with gateway updates. If you proxy MCP tools through browser auth, retest your callback handling now and remove any loose state checks you were tolerating in dev.
+- **Claude Code adds structured MCP input and monorepo controls**: `v2.1.76` lets MCP servers request structured input mid-task, adds `worktree.sparsePaths`, and exposes `/effort`. Shift internal tools from long prompts to guided input, and tune sparse checkouts plus effort defaults for large repos.
+- **Gemini CLI goes deeper on agent-to-agent flows**: the latest nightly adds OAuth2 Authorization Code support for agent-to-agent (A2A) auth, slash-command skill activation, per-model token usage in `stream-json`, and an event-driven tool scheduler. Upgrade your CLI harnesses and log spend per model, not as one pooled number.
+- **OpenAI Node adds custom voices**: `openai-node v6.29.0` exposes custom voices in the API client. If your coding copilot speaks, move voice identity into product code instead of maintaining a separate text-to-speech layer.
+- **AI SDK tightens MCP OAuth**: `@ai-sdk/mcp@1.0.28` validates OAuth `state` during MCP auth, and the patch train also moved gateway updates forward. Retest browser-based MCP sign-in flows and remove any relaxed `state` handling left over from local development.
 
 ## Sources
 

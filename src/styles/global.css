@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #FAF6F1;
+  --color-cream-dark: #F0EBE5;
+  --color-espresso: #3D3229;
+  --color-espresso-light: #7A6E62;
+  --color-espresso-muted: #A89E94;
+  --color-caramel: #C8956C;
+  --color-caramel-dark: #B07D55;
+  --color-warm-border: #E8E0D8;
+
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-cream);
+    color: var(--color-espresso);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+  }
+
+  ::selection {
+    background-color: var(--color-caramel);
+    color: white;
+  }
+}
+
+/* Prose styles for MDX content */
+.prose {
+  max-width: 65ch;
+  line-height: 1.75;
+}
+
+.prose h2 {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--color-espresso);
+}
+
+.prose h3 {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-espresso);
+}
+
+.prose p {
+  margin-bottom: 1.25rem;
+  color: var(--color-espresso);
+}
+
+.prose a {
+  color: var(--color-caramel-dark);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose a:hover {
+  color: var(--color-caramel);
+}
+
+.prose strong {
+  font-weight: 600;
+  color: var(--color-espresso);
+}
+
+.prose ul, .prose ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.prose ul {
+  list-style-type: disc;
+}
+
+.prose ol {
+  list-style-type: decimal;
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--color-caramel);
+  padding-left: 1rem;
+  margin-bottom: 1.25rem;
+  color: var(--color-espresso-light);
+  font-style: italic;
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background-color: var(--color-cream-dark);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+}
+
+.prose pre {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  background-color: var(--color-espresso) !important;
+  color: var(--color-cream) !important;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1.25rem;
+  overflow-x: auto;
+}
+
+.prose pre code {
+  background-color: transparent;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--color-warm-border);
+  margin: 2rem 0;
+}
+
+.prose img {
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;
+}

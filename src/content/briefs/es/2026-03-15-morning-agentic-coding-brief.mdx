@@ -1,0 +1,20 @@
+---
+title: Brief matutino de coding agéntico
+date: 2026-03-15
+extract: Claude Code amplió el control agéntico con input estructurado en mitad de la tarea, mientras el SDK de Go de OpenAI sumó batch de video, carga diferida de herramientas y un cambio breaking en voces.
+tags:
+  - Anthropic
+  - OpenAI
+  - Coding agéntico
+---
+
+Las novedades con más impacto práctico en las últimas 24 horas fueron de control y operación, no de modelos nuevos. Claude Code avanzó en interacción estructurada durante la ejecución vía Model Context Protocol (MCP) y en ergonomía para repos grandes, mientras OpenAI movió más superficies de producción a su SDK de Go.
+
+- **Claude Code suma elicitation estructurada para MCP**: `v2.1.76` permite que servidores MCP pidan input estructurado a mitad de tarea y agrega hooks `Elicitation` para interceptar respuestas. Conviene sacar auth, selección de entorno y parámetros de deploy de prompts frágiles y pasarlos a flujos tipados.
+- **Claude Code gana más control en monorepos**: la misma release agrega `worktree.sparsePaths`, `/effort`, `PostCompact` y mejor preservación de resultados parciales en agentes en background. Limitá el worktree a los directorios tocados y fijá niveles de esfuerzo antes de corridas largas.
+- **El SDK de Go de OpenAI agrega batch de video, lazy tools y un cambio breaking en voz**: `v3.28.0` suma soporte batch para `/v1/videos`, `defer_loading` en function tools y cambia `voice` de `string` a `string | {id}`. Actualizá tus tipos antes del bump, diferí herramientas pesadas hasta necesitarlas y tratá las voces como objetos API de primera clase.
+
+## Fuentes
+
+- [Release Anthropic Claude Code v2.1.76](https://github.com/anthropics/claude-code/releases/tag/v2.1.76)
+- [Release OpenAI Go SDK v3.28.0](https://github.com/openai/openai-go/releases/tag/v3.28.0)

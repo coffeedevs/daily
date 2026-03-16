@@ -1,0 +1,22 @@
+---
+title: Codex acelera las aprobaciones y vuelve riesgoso seguir latest sin fijar versión
+date: 2026-03-16
+extract: Las releases alpha de Codex ajustaron la latencia de aprobaciones, sumaron metadata más útil en tool calls de apps y volvieron más importante fijar versión en flujos de coding agéntico en producción.
+tags:
+  - OpenAI
+  - Codex
+  - Coding agéntico
+---
+
+Codex de OpenAI fue el único flujo con cambios claramente relevantes para el trabajo diario que pude verificar en las últimas 24 horas, y el patrón fue operativo más que de modelos. Hubo dos releases alpha en cerca de una hora, las sesiones con aprobaciones frecuentes ganaron eficiencia y los tool calls conectados a apps quedaron más fáciles de enrutar y depurar.
+
+- **Codex ya cambia lo bastante rápido como para que seguir `latest` sea un error de workflow**: OpenAI publicó `0.115.0-alpha.25` y `0.115.0-alpha.26` en cerca de una hora. Fijá la versión en CI y devcontainers, y agrupá upgrades detrás de un smoke test en vez de dejar que cada corrida tome lo último.
+- **Las aprobaciones ahora cuestan menos latencia**: Codex reutiliza la sesión del guardian entre aprobaciones, mantiene estable la prompt-cache y evita cold starts por revisión. Mantené los approval gates para pasos riesgosos de archivos, red o deploy en vez de colapsarlos en un solo prompt.
+- **Los tool calls conectados a apps traen metadata más enrutable**: Codex ahora adjunta `_meta` con pistas de recurso para acelerar lookup y ejecución. Si exponés herramientas por MCP o apps, empezá a leer y loguear esa metadata para bajar prompt glue y reintentos innecesarios.
+
+## Fuentes
+
+- [Release de OpenAI Codex `0.115.0-alpha.25`](https://github.com/openai/codex/releases/tag/rust-v0.115.0-alpha.25)
+- [Release de OpenAI Codex `0.115.0-alpha.26`](https://github.com/openai/codex/releases/tag/rust-v0.115.0-alpha.26)
+- [Commit: Reuse guardian session across approvals](https://github.com/openai/codex/commit/6fdeb1d)
+- [Commit: Add tool call metadata for apps](https://github.com/openai/codex/commit/49edf31)

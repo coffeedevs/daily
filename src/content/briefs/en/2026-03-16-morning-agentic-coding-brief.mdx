@@ -1,0 +1,22 @@
+---
+title: Codex Speeds Approval Loops and Raises the Cost of Floating Latest
+date: 2026-03-16
+extract: OpenAI’s Codex alpha releases tightened approval latency, added richer app tool-call metadata, and made version pinning more important for teams running agentic coding in production.
+tags:
+  - OpenAI
+  - Codex
+  - Agentic Coding
+---
+
+OpenAI’s Codex was the only clearly workflow-shifting stream I could verify in the last 24 hours, and the pattern was operational rather than model-centric. Two alpha releases landed within about an hour, approval-heavy sessions got cheaper, and app-backed tool calls became easier to route and debug.
+
+- **Codex is shipping fast enough that floating `latest` is now a workflow bug**: OpenAI cut `0.115.0-alpha.25` and `0.115.0-alpha.26` within about an hour. Pin Codex in CI and devcontainers, then batch upgrades behind a smoke test instead of drifting on every agent run.
+- **Approval loops got cheaper**: Codex now reuses the guardian session across approvals, keeping a stable prompt-cache key and avoiding per-review cold starts. Keep approval gates on for risky file, network, or deploy steps instead of flattening them into one prompt to save latency.
+- **App-backed tool calls got more routable**: Codex now attaches `_meta` resource hints to tool calls to shortcut lookup and speed execution. If you expose MCP or app tools, start reading and logging tool metadata so agents can route with less prompt glue and less retry churn.
+
+## Sources
+
+- [OpenAI Codex release `0.115.0-alpha.25`](https://github.com/openai/codex/releases/tag/rust-v0.115.0-alpha.25)
+- [OpenAI Codex release `0.115.0-alpha.26`](https://github.com/openai/codex/releases/tag/rust-v0.115.0-alpha.26)
+- [Commit: Reuse guardian session across approvals](https://github.com/openai/codex/commit/6fdeb1d)
+- [Commit: Add tool call metadata for apps](https://github.com/openai/codex/commit/49edf31)

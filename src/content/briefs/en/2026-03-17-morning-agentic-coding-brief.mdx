@@ -1,0 +1,22 @@
+---
+title: Codex Goes Multimodal While Claude Code Opens Finer Sandbox Control
+date: 2026-03-17
+extract: Codex 0.115.0 pushed multimodal inspection, smarter approvals, and app-server filesystem APIs into daily agent workflows, while Claude Code 2.1.77 raised output ceilings and added more precise read-policy overrides.
+tags:
+  - OpenAI
+  - Anthropic
+  - Agentic Coding
+---
+
+Today’s biggest workflow changes came from core coding agents, not new foundation models. Codex 0.115.0 moved further into multimodal debugging and app-backed automation, while Claude Code 2.1.77 removed several friction points in long or policy-heavy sessions. If you run agents against real repos, the net effect is more precision with less prompt glue.
+
+- **Codex can inspect images at full resolution now**: supported models can request `detail: "original"` through `view_image` and `codex.emitImage(...)`. Upgrade screenshot-driven QA and browser-agent loops, and stop downsampling images you expect the model to debug.
+- **Codex app integrations are closer to real automation backends**: `0.115.0` adds app-server filesystem RPCs plus a Python SDK for file reads, writes, copies, directory ops, and path watching. Replace ad hoc shell shims with typed endpoints if agents need controlled workspace access.
+- **Codex made approval-heavy sessions cheaper to keep safe**: Smart Approvals now route review requests through a guardian subagent instead of rebuilding context on every risky step. Re-enable granular approval gates for file, network, and deploy actions instead of flattening them into one permissive prompt.
+- **Claude Code raised both output headroom and sandbox precision**: `v2.1.77` lifts default Opus 4.6 output limits to 64k, allows up to 128k on Opus 4.6 and Sonnet 4.6, and adds `allowRead` exceptions inside `denyRead`. Revisit policies that over-broaden read access or force awkward chunking on large refactors.
+- **Claude Code fixed several trust-breaking session bugs**: the release closes repeated prompts on compound bash commands, resume-history truncation, and runaway memory growth in long sessions. If you disabled `--resume`, long runs, or "Always Allow" rules after recent surprises, retest those paths on `v2.1.77`.
+
+## Sources
+
+- [OpenAI Codex release `0.115.0`](https://github.com/openai/codex/releases/tag/rust-v0.115.0)
+- [Anthropic Claude Code release `v2.1.77`](https://github.com/anthropics/claude-code/releases/tag/v2.1.77)

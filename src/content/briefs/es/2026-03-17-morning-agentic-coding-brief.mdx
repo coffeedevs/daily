@@ -1,0 +1,22 @@
+---
+title: Codex se vuelve multimodal y Claude Code abre control más fino del sandbox
+date: 2026-03-17
+extract: Codex 0.115.0 empujó inspección multimodal, aprobaciones más eficientes y APIs de filesystem para app-server al flujo diario de agentes, mientras Claude Code 2.1.77 amplió el output y sumó overrides de lectura más precisos.
+tags:
+  - OpenAI
+  - Anthropic
+  - Coding agéntico
+---
+
+Los cambios con más impacto hoy vinieron de agentes de coding, no de modelos nuevos. Codex 0.115.0 avanzó en debugging multimodal y automatización conectada a apps, mientras Claude Code 2.1.77 eliminó varios puntos de fricción en sesiones largas o con políticas estrictas. Si corrés agentes sobre repos reales, el efecto práctico es más precisión con menos prompt glue.
+
+- **Codex ya puede inspeccionar imágenes en resolución completa**: los modelos compatibles pueden pedir `detail: "original"` vía `view_image` y `codex.emitImage(...)`. Actualizá tus loops de QA con screenshots y agentes de navegador, y dejá de comprimir imágenes que esperás que el modelo depure.
+- **Las integraciones de apps en Codex se acercan más a un backend de automatización real**: `0.115.0` suma filesystem RPCs en app-server y un SDK de Python para leer, escribir, copiar, operar directorios y observar rutas. Reemplazá wrappers de shell improvisados por endpoints tipados si tus agentes necesitan acceso controlado al workspace.
+- **Codex bajó el costo de mantener sesiones seguras con muchas aprobaciones**: Smart Approvals ahora enruta revisiones por un subagente guardian en vez de reconstruir contexto en cada paso riesgoso. Volvé a habilitar approval gates granulares para archivos, red y deploy en lugar de colapsarlos en un prompt permisivo.
+- **Claude Code subió el techo de salida y la precisión del sandbox**: `v2.1.77` lleva el límite por defecto de Opus 4.6 a 64k, permite hasta 128k en Opus 4.6 y Sonnet 4.6, y agrega excepciones `allowRead` dentro de `denyRead`. Revisá políticas que abren demasiado la lectura o fuerzan chunking incómodo en refactors grandes.
+- **Claude Code corrigió varios bugs que erosionaban la confianza en sesiones largas**: la release cierra prompts repetidos en comandos bash compuestos, truncado del historial al reanudar y crecimiento descontrolado de memoria. Si desactivaste `--resume`, corridas largas o reglas "Always Allow" por problemas recientes, probá de nuevo con `v2.1.77`.
+
+## Fuentes
+
+- [Release de OpenAI Codex `0.115.0`](https://github.com/openai/codex/releases/tag/rust-v0.115.0)
+- [Release de Anthropic Claude Code `v2.1.77`](https://github.com/anthropics/claude-code/releases/tag/v2.1.77)

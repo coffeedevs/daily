@@ -16,8 +16,7 @@ const { lang } = Astro.props;
     {t(lang, 'newsletter.desc')}
   </p>
   <form
-    action="#"
-    method="POST"
+    id="newsletter-form"
     class="flex flex-col sm:flex-row gap-3"
   >
     <input
@@ -34,7 +33,53 @@ const { lang } = Astro.props;
       {t(lang, 'newsletter.button')}
     </button>
   </form>
-  <p class="text-xs text-espresso-muted mt-3">
+  <p id="newsletter-msg" class="text-xs mt-3 hidden"
+    data-success={t(lang, 'newsletter.success')}
+    data-existing={t(lang, 'newsletter.existing')}
+    data-error={t(lang, 'newsletter.error')}
+  ></p>
+  <p id="newsletter-disclaimer" class="text-xs text-espresso-muted mt-3">
     {t(lang, 'newsletter.disclaimer')}
   </p>
 </section>
+
+<script>
+  const form = document.getElementById('newsletter-form') as HTMLFormElement;
+  const msg = document.getElementById('newsletter-msg')!;
+  const disclaimer = document.getElementById('newsletter-disclaimer')!;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button')!;
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = '...';
+
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        body: new FormData(form),
+      });
+      const data = await res.json();
+
+      if (data.ok) {
+        msg.textContent = data.existing
+          ? msg.dataset.existing!
+          : msg.dataset.success!;
+        msg.className = 'text-xs mt-3 text-green-700';
+        disclaimer.classList.add('hidden');
+        form.classList.add('hidden');
+      } else {
+        msg.textContent = msg.dataset.error!;
+        msg.className = 'text-xs mt-3 text-red-600';
+        btn.disabled = false;
+        btn.textContent = originalText;
+      }
+    } catch {
+      msg.textContent = msg.dataset.error!;
+      msg.className = 'text-xs mt-3 text-red-600';
+      btn.disabled = false;
+      btn.textContent = originalText;
+    }
+  });
+</script>

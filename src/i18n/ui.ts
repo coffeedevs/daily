@@ -14,6 +14,9 @@ export const ui = {
     'newsletter.placeholder': 'your@email.com',
     'newsletter.button': 'Subscribe',
     'newsletter.disclaimer': 'No spam. Unsubscribe anytime.',
+    'newsletter.success': 'Welcome aboard! Check your inbox.',
+    'newsletter.existing': "You're already subscribed!",
+    'newsletter.error': 'Something went wrong. Try again.',
   },
   es: {
     'site.tagline': 'Tu dosis diaria de noticias sobre agentic coding',
@@ -27,6 +30,9 @@ export const ui = {
     'newsletter.placeholder': 'tu@email.com',
     'newsletter.button': 'Suscribirse',
     'newsletter.disclaimer': 'Sin spam. Cancelá cuando quieras.',
+    'newsletter.success': 'Bienvenido/a. Revisá tu inbox.',
+    'newsletter.existing': 'Ya estás suscripto/a.',
+    'newsletter.error': 'Algo salió mal. Intentá de nuevo.',
   },
 } as const;
 

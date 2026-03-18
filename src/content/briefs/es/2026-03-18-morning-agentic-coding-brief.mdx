@@ -1,0 +1,23 @@
+---
+title: Codex endurece el sandbox y empuja a los agentes realtime hacia WebSockets
+date: 2026-03-18
+extract: Codex 0.116.0-alpha.5 y .6 se concentró en trabajo de runtime que sí pega en producción: transporte realtime con preferencia por websockets, límites más limpios entre app-server y SDK de Python, y menos trampas en sandbox para Linux y Windows.
+tags:
+  - OpenAI
+  - Codex
+  - Coding agéntico
+---
+
+El mayor cambio del último día no fue un modelo nuevo sino un runtime de Codex más duro y utilizable. OpenAI enfocó `0.116.0-alpha.5` y `0.116.0-alpha.6` en transporte, límites del entorno y comportamiento del sandbox que afectan repos reales y despliegues de agentes hospedados. Si corrés Codex en CI, sandboxes remotos o backends de herramientas propios, esto es operativo, no cosmético.
+
+- **Los agentes realtime se mueven a transporte websocket-first**: `0.116.0-alpha.6` ahora prefiere websockets cuando el proveedor los soporta y ordena mejor el cierre de sesiones realtime en la TUI. Eliminá workarounds de prompts atados al transporte y volvé a probar loops de voz o live-coding de baja latencia sobre la ruta websocket.
+- **Codex está separando el acceso al entorno de la lógica del agente**: `0.116.0-alpha.6` suma una abstracción de filesystem y entorno usada por `view_image`, mientras `0.116.0-alpha.5` simplificó el SDK de Python sobre modelos canónicos del app-server. Si armaste wrappers sobre supuestos de filesystem local o tipos de resultado propios, empezá a migrarlos al esquema del app-server.
+- **La política de sandbox quedó más estricta y portable**: `0.116.0-alpha.6` ya respeta perfiles de permisos activos en sandbox debug y agrega soporte de lectura restringida para sandboxes elevados en Windows. Revisá cualquier default de `workspace-write` o full-read que hayas dejado solo para destrabar flujos de debug en Windows o macOS.
+- **Linux y setups self-hosted con app-server necesitan una auditoría rápida**: `0.116.0-alpha.5` ahora prefiere `/usr/bin/bwrap` del sistema en Ubuntu/AppArmor, y `0.116.0-alpha.6` rechaza requests websocket que traigan header `Origin`. Verificá que el host tenga `bwrap` del sistema y revisá proxies inversos o clientes tipo browser que puedan inyectar `Origin`.
+
+## Fuentes
+
+- [Release de OpenAI Codex `0.116.0-alpha.5`](https://github.com/openai/codex/releases/tag/rust-v0.116.0-alpha.5)
+- [Compare de OpenAI Codex `0.116.0-alpha.4...0.116.0-alpha.5`](https://github.com/openai/codex/compare/rust-v0.116.0-alpha.4...rust-v0.116.0-alpha.5)
+- [Release de OpenAI Codex `0.116.0-alpha.6`](https://github.com/openai/codex/releases/tag/rust-v0.116.0-alpha.6)
+- [Compare de OpenAI Codex `0.116.0-alpha.5...0.116.0-alpha.6`](https://github.com/openai/codex/compare/rust-v0.116.0-alpha.5...rust-v0.116.0-alpha.6)

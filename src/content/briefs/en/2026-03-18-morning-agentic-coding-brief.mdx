@@ -1,0 +1,23 @@
+---
+title: Codex Tightens Sandboxes and Pushes Realtime Agents Toward WebSockets
+date: 2026-03-18
+extract: Codex 0.116.0-alpha.5 and .6 concentrated on agent runtime work that matters in production: websocket-first realtime transport, cleaner app-server and Python SDK boundaries, and fewer Linux or Windows sandbox footguns.
+tags:
+  - OpenAI
+  - Codex
+  - Agentic Coding
+---
+
+The biggest shift in the last day was not a new model but a harder-edged Codex runtime. OpenAI’s `0.116.0-alpha.5` and `0.116.0-alpha.6` focused on transport, environment boundaries, and sandbox behavior that directly affect real repos and hosted agent setups. If you run Codex in CI, remote sandboxes, or custom tool backends, these changes are operational, not cosmetic.
+
+- **Realtime agents are moving to websocket-first transport**: `0.116.0-alpha.6` now prefers websockets when providers support them and cleans up realtime shutdown in the TUI. Drop transport-specific prompt workarounds, and retest low-latency voice or live-coding loops on the websocket path.
+- **Codex is separating environment access from agent logic**: `0.116.0-alpha.6` adds a filesystem and environment abstraction used by `view_image`, while `0.116.0-alpha.5` simplified the Python SDK onto canonical app-server models. If you built wrappers around local-FS assumptions or custom SDK result types, start migrating to the app-server schema now.
+- **Sandbox policy got stricter and more portable**: `0.116.0-alpha.6` now honors active permission profiles in sandbox debug and adds restricted read-only support for elevated Windows sandboxes. Revisit any `workspace-write` or full-read defaults you added just to keep Windows or macOS debug flows working.
+- **Linux and self-hosted app-server setups need a quick audit**: `0.116.0-alpha.5` now prefers system `/usr/bin/bwrap` on Ubuntu/AppArmor, and `0.116.0-alpha.6` rejects websocket requests that carry `Origin` headers. Verify your host has system `bwrap`, and check reverse proxies or browser-like clients that may inject `Origin`.
+
+## Sources
+
+- [OpenAI Codex release `0.116.0-alpha.5`](https://github.com/openai/codex/releases/tag/rust-v0.116.0-alpha.5)
+- [OpenAI Codex compare `0.116.0-alpha.4...0.116.0-alpha.5`](https://github.com/openai/codex/compare/rust-v0.116.0-alpha.4...rust-v0.116.0-alpha.5)
+- [OpenAI Codex release `0.116.0-alpha.6`](https://github.com/openai/codex/releases/tag/rust-v0.116.0-alpha.6)
+- [OpenAI Codex compare `0.116.0-alpha.5...0.116.0-alpha.6`](https://github.com/openai/codex/compare/rust-v0.116.0-alpha.5...rust-v0.116.0-alpha.6)

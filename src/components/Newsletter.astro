@@ -56,9 +56,11 @@ const { lang } = Astro.props;
     btn.textContent = '...';
 
     try {
+      const email = new FormData(form).get('email');
       const res = await fetch('/api/subscribe', {
         method: 'POST',
-        body: new FormData(form),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
       });
       const data = await res.json();
 

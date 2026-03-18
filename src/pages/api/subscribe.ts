@@ -3,8 +3,8 @@ import type { APIRoute } from 'astro';
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
-  const formData = await request.formData();
-  const email = formData.get('email')?.toString();
+  const body = await request.json();
+  const email = body.email;
 
   if (!email) {
     return new Response(JSON.stringify({ error: 'Email is required' }), {

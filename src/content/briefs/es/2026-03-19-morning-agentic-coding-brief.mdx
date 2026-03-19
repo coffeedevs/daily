@@ -1,0 +1,28 @@
+---
+title: Codex lleva la shell al servidor mientras Claude y Gemini endurecen el control de agentes
+date: 2026-03-19
+extract: "Las últimas 24 horas trataron más sobre la forma del runtime que sobre modelos nuevos. OpenAI empujó Codex hacia ejecución mediada por servidor, Anthropic quitó fricción en Claude Code para automatización real y Google siguió convirtiendo Gemini CLI en un sistema más estricto de subagentes y sandbox."
+tags:
+  - OpenAI
+  - Anthropic
+  - Google
+  - Coding agéntico
+---
+
+El mayor cambio de las últimas 24 horas fue estructural: las herramientas de agentes se están moviendo detrás de límites de ejecución más claros en vez de depender de comportamientos locales ad hoc. OpenAI y Google endurecieron cómo se conectan shell, sandbox y agentes delegados, mientras Anthropic volvió a Claude Code más confiable para automatizaciones reales y handoffs entre terminal y editor.
+
+- **Codex está formalizando la ejecución remota alrededor de un exec server**: `0.116.0-alpha.10` y `.11` suman el nuevo stack `exec-server` y eliminan el transporte stdio deprecado en esa ruta. Si corrés Codex en sandboxes hospedados o clientes propios, empezá a apuntar a ejecución tipo JSON-RPC o websocket en vez de asumir stdio local.
+- **Codex ya expone los comandos `!` de shell desde el app-server**: OpenAI agregó `thread/shellCommand` al API para que esos atajos corran dentro del sandbox y sigan siendo visibles para el modelo. Si tu cliente todavía maneja escapes de shell por fuera, conviene migrarlos a la superficie del app-server.
+- **Claude Code 2.1.79 sí cambia flujos scriptados y con handoff**: corrige el cuelgue de `claude -p` como subprocess, mejora timeouts de fallback no streaming, baja el uso inicial de memoria en unos 18 MB y suma `/remote-control` en VS Code más auth de Console con `--console`. Actualizá si incrustás Claude Code en automatización Python o pasás sesiones del terminal al navegador.
+- **Gemini CLI nightly está convirtiendo contexto y navegador en superficies de política**: el último nightly agrega descubrimiento just-in-time de contexto desde `GEMINI.md`, verificación de integridad de extensiones y restricciones de dominios permitidos para el agente de navegador, mientras commits recientes endurecen el sandbox en macOS y la aislación de subagentes. Mové la guía del repo a archivos de memoria por carpeta, definí allowlists de dominios y volvé a probar cualquier flujo multiagente sobre nightly.
+
+## Fuentes
+
+- [Releases de OpenAI Codex](https://github.com/openai/codex/releases)
+- [Compare de OpenAI Codex `0.116.0-alpha.9...0.116.0-alpha.11`](https://github.com/openai/codex/compare/rust-v0.116.0-alpha.9...rust-v0.116.0-alpha.11)
+- [Commit de OpenAI Codex: API `thread/shellCommand`](https://github.com/openai/codex/commit/01df50cf422b2eb89cb6ad8f845548e8c0d3c60c)
+- [Release de Anthropic Claude Code `v2.1.79`](https://github.com/anthropics/claude-code/releases/tag/v2.1.79)
+- [Changelog de Anthropic Claude Code](https://github.com/anthropics/claude-code/blob/v2.1.79/CHANGELOG.md)
+- [Releases de Google Gemini CLI](https://github.com/google-gemini/gemini-cli/releases)
+- [Commit de Google Gemini CLI: sandbox estricto en macOS](https://github.com/google-gemini/gemini-cli/commit/f6e21f50fd245c34a2eb4b2dd233d71c1a9035c2)
+- [Commit de Google Gemini CLI: ejecución local de subagentes y aislación de herramientas](https://github.com/google-gemini/gemini-cli/commit/7bfe6ac418f6f0b0e7b6fc15d70bce8cb2cc3e84)

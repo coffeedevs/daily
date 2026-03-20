@@ -1,0 +1,26 @@
+---
+title: Codex Splits Execution Paths as Claude, Gemini, and GPT-5.4 Tighten Developer Control
+date: 2026-03-20
+extract: "Today’s useful changes were about control surfaces, not hype. OpenAI pushed Codex further toward managed plugins and clearer remote execution, Anthropic gave Claude Code more declarative session controls, Google made Gemini CLI better suited for isolated parallel runs, and OpenAI published a concrete GPT-5.4 frontend prompting playbook."
+tags:
+  - OpenAI
+  - Anthropic
+  - Google
+  - Agentic Coding
+---
+
+The biggest shift today is control: agent tools are getting more explicit boundaries for execution, plugins, and session state. OpenAI pushed Codex toward cleaner remote and plugin flows, Anthropic made Claude Code more configurable inside real automation, and Google moved Gemini CLI closer to isolated multi-agent worktrees. OpenAI also published the clearest GPT-5.4 frontend prompting guidance so far, and it is immediately usable.
+
+- **GPT-5.4 frontend prompting now has a concrete playbook**: OpenAI says to start at low reasoning, define tokens and layout up front, and attach visual references. Replace vague UI prompts with design-system, motion, and narrative constraints today.
+- **Codex plugins are becoming a managed surface**: `0.116.0` improved remote plugin sync, and today’s commits add one-time startup sync, git-backed curated sync, MCP install on `plugin/install`, and a read-only plugins TUI. Move plugin setup out of README steps and into reproducible repo or settings flows.
+- **Codex is separating local and remote execution paths**: today’s main branch adds a local-vs-remote exec split, a full-buffer exec capture policy, and more remote-env CI coverage. If you run Codex in hosted sandboxes or custom clients, retest approvals, shell capture, and remote parity now.
+- **Claude Code 2.1.80 adds more declarative control for sessions and skills**: Anthropic added `rate_limits` for statusline scripts, settings-defined plugin entries, `effort` frontmatter for skills and slash commands, `--channels`, and a fix for `--resume` losing parallel tool results. Upgrade if you script Claude Code or want skills to select effort automatically.
+- **Gemini CLI is moving toward isolated parallel agent sessions**: Google landed Git worktree support, a new `AgentSession` abstraction with agent-event naming, and ACP-mode changes that drop `ask_user` where it cannot work. Shift multi-agent runs into worktrees and audit any ACP integrations against the new session model.
+
+## Sources
+
+- [OpenAI developer blog: Designing delightful frontends with GPT-5.4](https://developers.openai.com/blog/designing-delightful-frontends-with-gpt-5-4)
+- [OpenAI Codex releases](https://github.com/openai/codex/releases)
+- [OpenAI Codex commit history](https://github.com/openai/codex/commits/main/)
+- [Anthropic Claude Code releases](https://github.com/anthropics/claude-code/releases)
+- [Google Gemini CLI commit history](https://github.com/google-gemini/gemini-cli/commits/main/)

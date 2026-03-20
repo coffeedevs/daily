@@ -1,0 +1,26 @@
+---
+title: Codex separa rutas de ejecución mientras Claude, Gemini y GPT-5.4 afinan el control del desarrollador
+date: 2026-03-20
+extract: "Los cambios útiles de hoy no fueron hype sino control. OpenAI siguió llevando Codex hacia plugins gestionados y ejecución remota más clara, Anthropic agregó controles más declarativos en Claude Code, Google volvió a Gemini CLI más apto para corridas paralelas aisladas y OpenAI publicó una guía concreta para prompting frontend con GPT-5.4."
+tags:
+  - OpenAI
+  - Anthropic
+  - Google
+  - Coding agéntico
+---
+
+El cambio más importante de hoy fue el control: las herramientas de agentes están ganando límites más explícitos para ejecución, plugins y estado de sesión. OpenAI empujó Codex hacia flujos remotos y de plugins más limpios, Anthropic volvió a Claude Code más configurable dentro de automatización real y Google acercó Gemini CLI a corridas multiagente aisladas con worktrees. OpenAI además publicó la guía más concreta hasta ahora para prompting frontend con GPT-5.4, y se puede aplicar hoy mismo.
+
+- **GPT-5.4 ya tiene un playbook concreto para frontend**: OpenAI recomienda arrancar con razonamiento bajo, definir tokens y layout desde el inicio y adjuntar referencias visuales. Cambiá hoy los prompts vagos de UI por restricciones explícitas de sistema de diseño, motion y narrativa.
+- **Los plugins de Codex están pasando a ser una superficie gestionada**: `0.116.0` mejoró el sync remoto de plugins, y los commits de hoy agregan sync único al inicio, sync curado basado en git, instalación de MCP desde `plugin/install` y un TUI de plugins de solo lectura. Sacá la configuración de plugins de pasos manuales y llevála a flujos reproducibles del repo o settings.
+- **Codex está separando la ejecución local de la remota**: la rama principal sumó hoy un split entre exec local y remoto, una política de captura full-buffer y más cobertura de CI para entornos remotos. Si corrés Codex en sandboxes hospedados o clientes propios, conviene volver a probar approvals, captura de shell y paridad remota.
+- **Claude Code 2.1.80 agrega más control declarativo para sesiones y skills**: Anthropic sumó `rate_limits` para scripts de statusline, plugins definidos en settings, frontmatter `effort` para skills y slash commands, `--channels`, y corrigió `--resume` cuando se perdían resultados de herramientas paralelas. Actualizá si scriptás Claude Code o querés que las skills elijan esfuerzo automáticamente.
+- **Gemini CLI se está moviendo hacia sesiones paralelas aisladas**: Google agregó soporte para Git worktrees, una nueva abstracción `AgentSession` con eventos renombrados y cambios en ACP mode para excluir `ask_user` donde no funciona. Pasá las corridas multiagente a worktrees y revisá cualquier integración ACP contra ese nuevo modelo de sesión.
+
+## Fuentes
+
+- [Blog para desarrolladores de OpenAI: Designing delightful frontends with GPT-5.4](https://developers.openai.com/blog/designing-delightful-frontends-with-gpt-5-4)
+- [Releases de OpenAI Codex](https://github.com/openai/codex/releases)
+- [Historial de commits de OpenAI Codex](https://github.com/openai/codex/commits/main/)
+- [Releases de Anthropic Claude Code](https://github.com/anthropics/claude-code/releases)
+- [Historial de commits de Google Gemini CLI](https://github.com/google-gemini/gemini-cli/commits/main/)

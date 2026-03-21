@@ -1,0 +1,26 @@
+---
+title: Claude Code entra en modo bare mientras GPT-5.4, Codex y Gemini afinan el control agéntico
+date: 2026-03-21
+extract: "El cambio útil de hoy es más control sobre cómo corren los agentes de código. Anthropic lanzó un modo reducido de Claude Code para scripts deterministas, OpenAI publicó una receta concreta de prompting frontend para GPT-5.4 y tanto Codex como Gemini CLI siguieron endureciendo sesiones y flujos de aprobación."
+tags:
+  - OpenAI
+  - Anthropic
+  - Google
+  - Coding agéntico
+---
+
+El cambio más importante del último día es más control sobre cómo corren los agentes de código. Anthropic lanzó un modo reducido de Claude Code para scripts deterministas, OpenAI publicó una receta concreta para frontend con GPT-5.4 y tanto Codex como Gemini CLI siguieron endureciendo sesiones y flujos de aprobación. Conviene tratar estas CLIs menos como shells conversacionales y más como herramientas de build reproducible. Fijá modos, definí restricciones desde el inicio y volvé a probar los caminos de aprobación.
+
+- **Claude Code suma un modo real para scripting**: `v2.1.81` agrega `--bare` para corridas con `-p`. Saltea hooks, LSP, sync de plugins y escaneo de skills, mientras `--channels` puede reenviar approvals al teléfono. Pasá cron y CI a `--bare`, y probá approvals desviados al celular.
+- **GPT-5.4 ya tiene una receta explícita para frontend**: OpenAI recomienda arrancar con razonamiento bajo, definir tokens de diseño y restricciones de layout desde el inicio, adjuntar screenshots y fijar una estrategia narrativa o de contenido. Reescribí hoy los prompts de UI como especificaciones estructuradas en vez de pedir “un dashboard lindo”.
+- **Codex está bajando fricción en caminos de automatización confiables**: la rama principal desactiva `command_might_be_dangerous` cuando no hay sandbox y suma plugins destacados según plataforma. También sigue flexibilizando perfiles de filesystem restringido para ejecutables auxiliares. Si corrés Codex dentro de contenedores o wrappers controlados, conviene volver a probar approvals y bootstrap ahora.
+- **Gemini CLI se está poniendo más estricto con sesiones y approvals**: commits recientes agregan soporte para Git worktrees y `AgentSession`, y quitan `ask_user` donde ACP no lo puede sostener. Las últimas actualizaciones también aclaran el reuso de sesiones de browser y suman soporte `ask` en hooks `BeforeTool`. Separá agentes paralelos por worktree y auditá la lógica de hooks sin aprobación interactiva.
+
+## Fuentes
+
+- [Blog para desarrolladores de OpenAI: Designing delightful frontends with GPT-5.4](https://developers.openai.com/blog/designing-delightful-frontends-with-gpt-5-4)
+- [Índice del blog para desarrolladores de OpenAI](https://developers.openai.com/blog)
+- [Releases de OpenAI Codex](https://github.com/openai/codex/releases)
+- [Historial de commits de OpenAI Codex](https://github.com/openai/codex/commits/main/)
+- [Releases de Anthropic Claude Code](https://github.com/anthropics/claude-code/releases)
+- [Historial de commits de Google Gemini CLI](https://github.com/google-gemini/gemini-cli/commits/main/)

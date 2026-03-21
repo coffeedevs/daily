@@ -1,0 +1,26 @@
+---
+title: Claude Code Goes Bare as GPT-5.4, Codex, and Gemini Sharpen Agent Control
+date: 2026-03-21
+extract: "The useful shift today is tighter control over how coding agents run. Anthropic shipped a stripped-down Claude Code mode for deterministic scripts, OpenAI published a concrete GPT-5.4 frontend prompting recipe, and both Codex and Gemini CLI kept tightening session and approval flows."
+tags:
+  - OpenAI
+  - Anthropic
+  - Google
+  - Agentic Coding
+---
+
+The biggest shift in the past day is tighter control over how coding agents run. Anthropic shipped a stripped-down Claude Code mode for deterministic scripts, OpenAI published a concrete GPT-5.4 frontend recipe, and both Codex and Gemini CLI kept tightening session and approval flows. Treat agent CLIs less like chat shells and more like reproducible build tools. Pin modes, define constraints up front, and retest approval paths.
+
+- **Claude Code adds a true script mode**: `v2.1.81` adds `--bare` for scripted `-p` runs. It skips hooks, LSP, plugin sync, and skill scans, while `--channels` can relay approvals to a phone. Move cron and CI usage to `--bare`, then test phone-routed approvals.
+- **GPT-5.4 frontend prompting now has an explicit recipe**: OpenAI says to start at low reasoning, define design tokens and layout constraints up front, add screenshots, and pin a narrative or content strategy. Rewrite UI prompts as structured specs today instead of asking for “a nice dashboard.”
+- **Codex is reducing friction in trusted automation paths**: today’s main branch disables `command_might_be_dangerous` when unsandboxed and adds platform-aware featured plugins. It also keeps loosening restricted filesystem flows around helper executables. If you run Codex inside controlled containers or wrappers, retest approvals and bootstrap steps now.
+- **Gemini CLI is getting stricter about session boundaries and approvals**: recent commits add Git worktree support and `AgentSession`, and they drop `ask_user` where ACP cannot support it. The latest updates also warn more clearly on reused browser sessions and add `ask` support in `BeforeTool` hooks. Split parallel agents into worktrees and audit hook logic for non-interactive environments.
+
+## Sources
+
+- [OpenAI developer blog: Designing delightful frontends with GPT-5.4](https://developers.openai.com/blog/designing-delightful-frontends-with-gpt-5-4)
+- [OpenAI developer blog index](https://developers.openai.com/blog)
+- [OpenAI Codex releases](https://github.com/openai/codex/releases)
+- [OpenAI Codex commit history](https://github.com/openai/codex/commits/main/)
+- [Anthropic Claude Code releases](https://github.com/anthropics/claude-code/releases)
+- [Google Gemini CLI commit history](https://github.com/google-gemini/gemini-cli/commits/main/)

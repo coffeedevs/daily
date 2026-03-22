@@ -1,0 +1,26 @@
+---
+title: Codex mete más lógica de apps en la TUI mientras Gemini corrige la fricción de sesiones largas
+date: 2026-03-22
+extract: "El cambio útil de hoy es trabajo de confiabilidad dentro de los runtimes agénticos. Codex está moviendo más plumbing de apps y approvals hacia la TUI, mientras Gemini CLI corrige los casos límite de sesiones y hooks que suelen romper los flujos largos."
+tags:
+  - OpenAI
+  - Google
+  - Coding agéntico
+---
+
+El cambio más importante del último día es trabajo de confiabilidad dentro de los runtimes agénticos, no un lanzamiento llamativo de modelo. Codex está moviendo más plumbing de apps y approvals hacia la TUI, mientras Gemini CLI corrige los casos límite de sesiones y hooks que suelen romper corridas largas. Si ya usás agentes de código todos los días, el upgrade útil es operativo: revisar límites de confianza, persistencia de approvals y cómo separás tareas desatendidas.
+
+- **Codex mete más tooling de apps dentro de la TUI**: los commits del 22 de marzo mejoran la carga de herramientas de apps en la TUI. Antes, el 21 de marzo, ya se había limpiado más auth y notifications del app-server legado. Debería haber menos desajustes entre sidecars y sesión; volvé a probar hoy los flujos de Codex conectados a apps y el bootstrap de plugins.
+- **Codex está redibujando los límites de las corridas confiables**: el 21 de marzo sumó contexto de aprobación del guardian y corrigió menciones explícitas de plugins. También habilitó code mode sobre V8 y desactivó `command_might_be_dangerous` cuando no hay sandbox. Si corrés Codex dentro de un wrapper controlado, endurecé la policy ahí y revalidá approvals antes de ampliar el uso sin sandbox.
+- **Gemini CLI está corrigiendo los callejones sin salida de las corridas largas**: los commits del 21 de marzo destraban plan mode y mantienen sesiones globales con approvals persistentes para `web_fetch`. También permiten `ask` en hooks `BeforeTool` y avisan mejor al reusar sesiones de browser. Activá approvals persistentes para agentes que dependen de fetch, estandarizá decisiones de hooks y separá tareas con browser de las corridas desatendidas.
+
+## Fuentes
+
+- [Historial de commits de OpenAI Codex](https://github.com/openai/codex/commits/main/)
+- [[apps] Improve app tools loading for TUI](https://github.com/openai/codex/commit/19702e1)
+- [Include guardian approval context](https://github.com/openai/codex/commit/0d9bb8e)
+- [Disable `command_might_be_dangerous` when unsandboxed](https://github.com/openai/codex/commit/60c59a7)
+- [Historial de commits de Google Gemini CLI](https://github.com/google-gemini/gemini-cli/commits/main/)
+- [Enable global session and persistent approval for `web_fetch`](https://github.com/google-gemini/gemini-cli/commit/4a3d941)
+- [Support `ask` decision for `BeforeTool` hooks](https://github.com/google-gemini/gemini-cli/commit/d1dc490)
+- [Add warning message for browser session mode `existing`](https://github.com/google-gemini/gemini-cli/commit/b316fcc)

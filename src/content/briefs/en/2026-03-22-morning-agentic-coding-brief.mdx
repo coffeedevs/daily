@@ -1,0 +1,26 @@
+---
+title: Codex Pulls More App Logic into the TUI While Gemini Fixes Long-Run Session Friction
+date: 2026-03-22
+extract: "The useful shift today is reliability work in agent runtimes. Codex is moving more app and approval plumbing into the TUI, while Gemini CLI is fixing the session and hook edge cases that usually break long-running developer workflows."
+tags:
+  - OpenAI
+  - Google
+  - Agentic Coding
+---
+
+The biggest shift in the past day is reliability work inside agent runtimes, not a flashy model launch. Codex is moving more app and approval plumbing into the TUI, while Gemini CLI is fixing the session and hook edge cases that usually break long-running runs. If you already use coding agents every day, the upgrade path is operational: recheck trust boundaries, approval persistence, and how you split unattended tasks.
+
+- **Codex pulls more app tooling into the TUI**: Mar 22 commits improve app tool loading for the TUI, after Mar 21 removed more legacy app-server auth and notification handling. Expect fewer sidecar mismatches in desktop and terminal sessions; retest app-connected Codex flows and plugin bootstrap paths today.
+- **Codex is redrawing trusted-run boundaries**: Mar 21 also added guardian approval context, fixed explicit plugin mentions, enabled code mode on V8, and disabled `command_might_be_dangerous` when unsandboxed. If you run Codex inside a controlled wrapper, tighten policy at the wrapper layer and re-verify approvals before broadening unsandboxed usage.
+- **Gemini CLI is fixing the dead ends that stall long agent runs**: Mar 21 commits unfreeze plan mode and keep global sessions plus persistent approvals for `web_fetch`. They also allow `ask` in `BeforeTool` hooks and warn on reused browser sessions. Turn on persistent approvals for fetch-heavy agents, standardize hook decisions, and separate browser-backed tasks from unattended runs.
+
+## Sources
+
+- [OpenAI Codex commit history](https://github.com/openai/codex/commits/main/)
+- [[apps] Improve app tools loading for TUI](https://github.com/openai/codex/commit/19702e1)
+- [Include guardian approval context](https://github.com/openai/codex/commit/0d9bb8e)
+- [Disable `command_might_be_dangerous` when unsandboxed](https://github.com/openai/codex/commit/60c59a7)
+- [Google Gemini CLI commit history](https://github.com/google-gemini/gemini-cli/commits/main/)
+- [Enable global session and persistent approval for `web_fetch`](https://github.com/google-gemini/gemini-cli/commit/4a3d941)
+- [Support `ask` decision for `BeforeTool` hooks](https://github.com/google-gemini/gemini-cli/commit/d1dc490)
+- [Add warning message for browser session mode `existing`](https://github.com/google-gemini/gemini-cli/commit/b316fcc)

@@ -1,0 +1,26 @@
+---
+title: Codex Tightens Local Agent Control as OpenAI Agents SDKs Move to Realtime 1.5
+date: 2026-03-23
+extract: "The useful shift today is OpenAI infrastructure hardening. Codex shipped operator-facing workflow changes for terminal sessions, while both OpenAI Agents SDKs moved their default realtime baseline to gpt-realtime-1.5 and exposed better MCP runtime primitives."
+tags:
+  - OpenAI
+  - Agents SDK
+  - Agentic Coding
+---
+
+The biggest shift in the last day is infrastructure, not a new flagship model. OpenAI tightened local-agent ergonomics in Codex, then shipped same-day Agents SDK releases that standardize on `gpt-realtime-1.5` and expand MCP server/session support. For teams already running coding agents in terminals or workers, today’s upgrade is about fewer restarts, fewer custom wrappers, and cleaner approval config.
+
+- **Codex reduces terminal friction in multi-turn sessions**: Mar 23 adds `Shift+Left` editing for queued tmux messages and snapshot-fork startup context injection. Use queued-turn correction and snapshot forks for pane handoffs instead of restarting sessions.
+- **Codex is forcing approval-config cleanup before wider unattended use**: Mar 23 removes the `smart_approvals` alias migration, following fresh exec-policy test coverage on Mar 22. Rename legacy keys now and pin wrapper policies explicitly before your next Codex upgrade.
+- **OpenAI Agents Python 0.13.0 resets the default realtime floor**: New websocket agents now default to `gpt-realtime-1.5`, add MCP resource reads plus resumable streamable HTTP sessions, and fix run-loop races. Drop custom MCP shims that only expose resources or session resume, then retest long-lived workers.
+- **OpenAI Agents JS 0.8.0 brings the same baseline to Node stacks**: JS agents now default to `gpt-realtime-1.5`, add MCP resource wrappers and streamable session IDs, and recover segmented assistant output more reliably. Upgrade Node runtimes that depend on MCP or handoffs, then recheck finalization and filter logic.
+
+## Sources
+
+- [OpenAI Codex commit history](https://github.com/openai/codex/commits/main)
+- [Use Shift+Left to edit queued messages in tmux](https://github.com/openai/codex/commit/5e3793d)
+- [core: snapshot fork startup context injection](https://github.com/openai/codex/commit/85065ea)
+- [Remove smart_approvals alias migration](https://github.com/openai/codex/commit/e830000)
+- [chore(exec_policy) ExecPolicyRequirementScenario tests](https://github.com/openai/codex/commit/31728dd)
+- [OpenAI Agents Python v0.13.0](https://github.com/openai/openai-agents-python/releases/tag/v0.13.0)
+- [OpenAI Agents JS v0.8.0](https://github.com/openai/openai-agents-js/releases/tag/v0.8.0)

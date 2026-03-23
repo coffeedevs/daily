@@ -1,0 +1,26 @@
+---
+title: Codex afina el control local de agentes mientras los Agents SDK de OpenAI pasan a Realtime 1.5
+date: 2026-03-23
+extract: "El cambio útil de hoy es endurecimiento de infraestructura en OpenAI. Codex sumó mejoras operativas para sesiones de terminal, mientras ambos Agents SDK fijaron `gpt-realtime-1.5` como baseline realtime y ampliaron primitives de MCP."
+tags:
+  - OpenAI
+  - Agents SDK
+  - Coding agéntico
+---
+
+El cambio más importante del último día es de infraestructura, no de un modelo estrella. OpenAI afinó la ergonomía de agentes locales en Codex y después publicó releases el mismo día para ambos Agents SDK, con `gpt-realtime-1.5` como baseline y mejor soporte de servidores y sesiones MCP. Para equipos que ya corren agentes de código en terminales o workers, el upgrade útil de hoy es menos reinicios, menos wrappers caseros y una config de approvals más limpia.
+
+- **Codex reduce la fricción de terminal en sesiones de varios turnos**: el 23 de marzo agregó edición con `Shift+Left` para mensajes en cola dentro de tmux y startup context injection para snapshot forks. Usá corrección de turnos en cola y snapshot forks para pasar trabajo entre panes sin reiniciar sesiones.
+- **Codex está forzando una limpieza de config de approvals antes de ampliar uso desatendido**: el 23 de marzo eliminó la migración del alias `smart_approvals`, después de sumar cobertura nueva para exec policy el 22 de marzo. Renombrá hoy las keys legadas y fijá policies explícitas en tus wrappers antes del próximo upgrade.
+- **OpenAI Agents Python 0.13.0 redefine el baseline realtime por defecto**: los agentes por websocket ahora usan `gpt-realtime-1.5`, agregan lectura de recursos MCP y sesiones streamable HTTP reanudables, y corrigen carreras del run loop. Sacá wrappers MCP propios si sólo exponían recursos o reanudación de sesión, y reprobá workers de larga vida.
+- **OpenAI Agents JS 0.8.0 lleva el mismo baseline a stacks Node**: los agentes JS ahora usan `gpt-realtime-1.5`, agregan wrappers de recursos MCP e IDs de sesión streamable, y recuperan mejor salidas segmentadas del asistente. Actualizá runtimes Node que dependan de MCP o handoffs y volvé a validar finalización y filtros.
+
+## Fuentes
+
+- [Historial de commits de OpenAI Codex](https://github.com/openai/codex/commits/main)
+- [Use Shift+Left to edit queued messages in tmux](https://github.com/openai/codex/commit/5e3793d)
+- [core: snapshot fork startup context injection](https://github.com/openai/codex/commit/85065ea)
+- [Remove smart_approvals alias migration](https://github.com/openai/codex/commit/e830000)
+- [chore(exec_policy) ExecPolicyRequirementScenario tests](https://github.com/openai/codex/commit/31728dd)
+- [OpenAI Agents Python v0.13.0](https://github.com/openai/openai-agents-python/releases/tag/v0.13.0)
+- [OpenAI Agents JS v0.8.0](https://github.com/openai/openai-agents-js/releases/tag/v0.8.0)

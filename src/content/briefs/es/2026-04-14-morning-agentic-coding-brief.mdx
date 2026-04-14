@@ -1,0 +1,29 @@
+---
+title: Llega el control remoto de agentes mientras Codex y Claude Code endurecen las sesiones de larga duración
+date: 2026-04-14
+extract: "El cambio útil de hoy es operativo, no de benchmarks. Codex, Claude Code, Copilot y Cursor publicaron mejoras que hacen más fácil reanudar, dirigir en remoto y correr en paralelo a los agentes de código."
+tags:
+  - OpenAI
+  - Anthropic
+  - GitHub Copilot
+  - Cursor
+  - Coding agéntico
+---
+
+El cambio útil de hoy es operativo, no de benchmarks. OpenAI, Anthropic, GitHub y Cursor publicaron ajustes de workflow que hacen más fácil mantener vivos a los agentes, dirigirlos desde otro lugar y repartir trabajo entre tareas concurrentes. Si tu setup todavía asume una sola terminal, una sola rama y una sola sesión en primer plano, hoy eso ya es el cuello de botella.
+
+- **Codex se vuelve más seguro para sesiones locales de larga duración**: OpenAI pasó la consolidación de memoria de Fase 2 a `gpt-5.4` y dejó de descargar threads del app-server apenas se desconecta el último cliente. Reprobá automatizaciones con memoria y tratá la reconexión como continuidad de sesión, no como reinicio en frío.
+- **Claude Code suma handoffs reales entre worktrees y guardas de compaction**: la última release agrega `EnterWorktree(path)`, deja que hooks de PreCompact bloqueen compactaciones malas y arranca monitores de plugins en automático. Actualizá hoy hooks y manifests si dependés de worktrees múltiples o supervisión MCP en background.
+- **Copilot CLI ya no queda atado a la terminal donde arrancó**: `copilot --remote` ahora permite monitorear y dirigir sesiones vivas desde GitHub web o mobile. Usalo para tests largos, deploys o corridas de agentes que sobreviven al contexto de tu laptop.
+- **GitHub mete reparación de PRs con cloud agents más adentro del review loop**: los PRs ahora pueden invocar a Copilot para resolver merge conflicts y pushear fixes desde el entorno cloud de GitHub. Sacá del entorno local la limpieza de conflictos de bajo riesgo y el “fix failing tests”, pero mantené branch protections estrictas.
+- **Cursor empuja más fuerte la gestión paralela de agentes**: Cursor 3.1 agrega paneles tileados persistentes y mejor dictado por voz en la ventana de Agents. Si ya dividís trabajo entre agentes, pasá a un workflow de un panel por tarea en vez de saltar pestañas en serie.
+
+## Fuentes
+
+- [Historial de commits de OpenAI Codex](https://github.com/openai/codex/commits/main)
+- [Update phase 2 memory model to gpt-5.4](https://github.com/openai/codex/commit/ec72b1ced9f38a7e44c2c3302fad86f8f5081452)
+- [app-server: Only unload threads which were unused for some time](https://github.com/openai/codex/commit/a5507b59c494a75fb094dbfc22c66e7b6527f2a9)
+- [Anthropic Claude Code v2.1.105](https://github.com/anthropics/claude-code/releases/tag/v2.1.105)
+- [Remote control CLI sessions on web and mobile in public preview](https://github.blog/changelog/2026-04-13-remote-control-cli-sessions-on-web-and-mobile-in-public-preview)
+- [Fix merge conflicts in three clicks with Copilot cloud agent](https://github.blog/changelog/2026-04-13-fix-merge-conflicts-in-three-clicks-with-copilot-cloud-agent)
+- [Changelog de Cursor 3.1](https://cursor.com/changelog)

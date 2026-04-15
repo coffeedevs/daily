@@ -1,0 +1,26 @@
+---
+title: Claude Code endurece el estado de sesión, Codex abre extensiones locales y Google empuja ingeniería de agentes
+date: 2026-04-15
+extract: "El cambio útil de hoy pasa por la durabilidad, no por hype de modelos. Claude Code endureció reanudación y caché, Codex mejoró la plomería de extensiones locales y debugging realtime, y Google empujó agentes más chicos y codificados en vez de prompts más grandes."
+tags:
+  - Anthropic
+  - OpenAI
+  - Google
+  - Coding agéntico
+  - MCP
+---
+
+Los cambios útiles de hoy apuntan a que los agentes sean más confiables para correr, reanudar y depurar. El patrón se repite: más comportamiento en código, más estado que sobrevive interrupciones y menos dependencia de un solo prompt gigante.
+
+- **Claude Code vuelve más barata la sesión interrumpida**: `2.1.108` suma `/recap`, lleva el prompt cache TTL a 1 hora en API key, Bedrock, Vertex y Foundry, y expone slash commands built-in vía Skill tool. Activá la caché larga y tratá esos comandos como primitivas reutilizables de agente.
+- **Claude Code sigue bajando la fricción de reanudar**: `2.1.109` mejora el indicador de extended thinking, y `2.1.108` acota `/resume` al directorio actual y baja el uso de memoria al leer archivos. Si tu equipo deja agentes corriendo en paralelo, estandarizá workflows centrados en reanudar.
+- **Codex se vuelve más amistoso para extensiones locales**: OpenAI agregó local marketplace sources, hizo filesystem-aware la carga de skills y mejoró defaults de tool search en `main`. Mové plugins y skills privados más cerca del repo y probalos como assets portables del workspace.
+- **Codex agregó wire tracing opt-in para depurar realtime**: un nuevo trace target registra eventos raw de WebSocket y requests SDP de WebRTC sin ensuciar el resto de los logs. Sumá esa flag al playbook de repro para sesiones colgadas de voz, browser o background agents.
+- **Google empuja arquitectura de agentes por encima de decoración de prompts**: su guía más reciente del Agent Bake-Off recomienda agentes descompuestos, código determinístico alrededor del modelo, contratos de herramientas explícitos y loops rápidos de evaluación. Refactorizá agentes de “hacé todo” en etapas planner/executor/evaluator antes de sumar más prompt.
+
+## Fuentes
+
+- [Changelog de Claude Code](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md)
+- [Historial de commits de OpenAI Codex](https://github.com/openai/codex/commits/main/)
+- [Add realtime wire trace logs](https://github.com/openai/codex/commit/8b7d0e920186642177924f4118b24e3947b250a1)
+- [Build better AI agents: 5 developer tips from the Google Agent Bake-Off](https://developers.googleblog.com/5-tips-to-build-better-ai-agents-with-the-agent-bake-off/)

@@ -1,0 +1,26 @@
+---
+title: Claude Code Hardens Session State, Codex Opens Local Extensions, and Google Pushes Agent Engineering
+date: 2026-04-15
+extract: "The useful shift today is durability, not raw model hype. Claude Code tightened resume and caching behavior, Codex improved local extension plumbing and realtime debugging, and Google made the case for smaller, coded agent loops over bigger prompts."
+tags:
+  - Anthropic
+  - OpenAI
+  - Google
+  - Agentic Coding
+  - MCP
+---
+
+Today’s useful changes are about making agents more dependable to run, resume, and debug. The pattern is consistent across vendors: keep more behavior in code, make session state survive interruptions, and stop treating agent workflows as one giant prompt.
+
+- **Claude Code makes interrupted sessions cheaper to resume**: `2.1.108` adds `/recap`, moves prompt-cache TTL to 1 hour across API key, Bedrock, Vertex, and Foundry, and exposes built-in slash commands through the Skill tool. Turn on the longer cache path and treat slash commands as reusable agent primitives.
+- **Claude Code keeps reducing restart friction**: `2.1.109` improves the extended-thinking indicator, while `2.1.108` narrows `/resume` to the current directory and cuts file-read memory usage. If your team leaves agents running in parallel, standardize resume-heavy workflows instead of restarting threads.
+- **Codex is getting friendlier to local extension stacks**: OpenAI landed local marketplace sources, filesystem-aware skill loading, and better tool-search defaults on `main`. Move private plugins and skills closer to the repo and test them as portable workspace assets.
+- **Codex added opt-in wire tracing for realtime debugging**: a new trace target logs raw WebSocket events and WebRTC SDP requests without turning on noisy global logs. Add that flag to your repro playbook for stuck voice, browser, or background-agent sessions.
+- **Google is pushing agent architecture over prompt ornamentation**: its latest Agent Bake-Off guidance favors decomposed agents, deterministic code around model calls, explicit tool contracts, and fast eval loops. Refactor “do everything” agents into planner/executor/evaluator stages before adding more prompt complexity.
+
+## Sources
+
+- [Claude Code changelog](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md)
+- [OpenAI Codex commit history](https://github.com/openai/codex/commits/main/)
+- [Add realtime wire trace logs](https://github.com/openai/codex/commit/8b7d0e920186642177924f4118b24e3947b250a1)
+- [Build better AI agents: 5 developer tips from the Google Agent Bake-Off](https://developers.googleblog.com/5-tips-to-build-better-ai-agents-with-the-agent-bake-off/)
